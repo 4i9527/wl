@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全能工具箱</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-100 min-h-screen transition-colors duration-300">
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+    <!-- 头部 -->
+    <header class="flex justify-between items-center mb-10">
+        <div>
+            <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold">
+                <i class="fa fa-wrench text-blue-500 mr-2"></i>全能工具箱
+            </h1>
+            <p class="text-gray-500 dark:text-gray-400">一站式在线实用工具集合</p>
+        </div>
+        <button id="themeBtn" class="p-3 rounded-full bg-gray-200 dark:bg-slate-700 card-hover">
+            <i class="fa fa-moon-o dark:hidden"></i>
+            <i class="fa fa-sun-o hidden dark:block"></i>
+        </button>
+    </header>
+
+    <!-- 搜索框 -->
+    <div class="mb-8">
+        <input id="searchInput" type="text" placeholder="搜索工具名称..."
+               class="w-full px-5 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 outline-none focus:ring-2 focus:ring-blue-400">
+    </div>
+
+    <!-- 工具分组 -->
+    <main class="grid gap-8">
+        <!-- 文本工具 -->
+        <section>
+            <h2 class="text-xl font-semibold mb-4 border-l-4 border-blue-500 pl-3">📝 文本处理</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 tool-group">
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-file-text-o text-blue-500 text-xl mb-2"></i>
+                    <div class="font-medium">JSON格式化</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-exchange text-green-500 text-xl mb-2"></i>
+                    <div class="font-medium">大小写转换</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-barcode text-amber-500 text-xl mb-2"></i>
+                    <div class="font-medium">URL编解码</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-lock text-red-500 text-xl mb-2"></i>
+                    <div class="font-medium">MD5加密</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-list text-sky-500 text-xl mb-2"></i>
+                    <div class="font-medium">文本去重</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 图像媒体 -->
+        <section>
+            <h2 class="text-xl font-semibold mb-4 border-l-4 border-rose-500 pl-3">🖼️ 图片媒体</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 tool-group">
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-picture-o text-rose-500 text-xl mb-2"></i>
+                    <div class="font-medium">图片压缩</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-crop text-orange-500 text-xl mb-2"></i>
+                    <div class="font-medium">图片裁剪</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-qrcode text-teal-500 text-xl mb-2"></i>
+                    <div class="font-medium">二维码生成</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-paint-brush text-violet-500 text-xl mb-2"></i>
+                    <div class="font-medium">色值转换</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 开发工具 -->
+        <section>
+            <h2 class="text-xl font-semibold mb-4 border-l-4 border-emerald-500 pl-3">💻 开发工具</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 tool-group">
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-code text-emerald-500 text-xl mb-2"></i>
+                    <div class="font-medium">代码格式化</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-terminal text-gray-500 text-xl mb-2"></i>
+                    <div class="font-medium">时间戳转换</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-random text-indigo-500 text-xl mb-2"></i>
+                    <div class="font-medium">随机字符串</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-database text-cyan-500 text-xl mb-2"></i>
+                    <div class="font-medium">Base64转换</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 生活计算 -->
+        <section>
+            <h2 class="text-xl font-semibold mb-4 border-l-4 border-amber-500 pl-3">🧮 计算工具</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 tool-group">
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-calculator text-amber-500 text-xl mb-2"></i>
+                    <div class="font-medium">科学计算器</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-calendar text-pink-500 text-xl mb-2"></i>
+                    <div class="font-medium">日期计算</div>
+                </a>
+                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
+                    <i class="fa fa-exchange text-lime-500 text-xl mb-2"></i>
+                    <div class="font-medium">单位换算</div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-16 pt-6 border-t border-gray-200 dark:border-slate-700 text-center text-sm text-gray-400">
+        简易工具箱 · 本地静态站点 | 自行添加更多工具链接
+    </footer>
+</div>
+
+<script>
+    // 暗色模式
+    const html = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    if(localStorage.getItem('theme') === 'dark'){
+        html.classList.add('dark');
+    }
+    themeBtn.onclick = ()=>{
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    // 搜索过滤功能
+    const searchInput = document.getElementById('searchInput');
+    const allTools = document.querySelectorAll('.tool-item');
+    searchInput.addEventListener('input', function(){
+        const keyword = this.value.trim().toLowerCase();
+        allTools.forEach(item=>{
+            const name = item.querySelector('div').innerText.toLowerCase();
+            item.style.display = name.includes(keyword) ? 'block' : 'none';
+        })
+    })
+</script>
+</body>
+</html>
