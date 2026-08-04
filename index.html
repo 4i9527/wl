@@ -3,169 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全能工具箱</title>
+    <title>点券充值中心</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
-                extend: {}
+                extend: {
+                    colors: {
+                        gameDark: '#141823',
+                        gameCard: '#1e2433',
+                        gameGold: '#e6b047',
+                        gameRed: '#d83c3c',
+                        gameBlue: '#3b82f6'
+                    },
+                    fontFamily: {
+                        sans: ['system-ui', 'sans-serif']
+                    }
+                }
             }
         }
     </script>
     <style type="text/tailwindcss">
         @layer utilities {
-            .card-hover {
-                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            .text-shadow {
+                text-shadow: 0 2px 8px rgba(230,176,71,0.4);
             }
+            .card-hover {
+                transition: all 0.25s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 8px 24px rgba(230,176,71,0.18);
+            }
+            .mask-fade {
+                animation: fadeIn 0.2s ease;
+            }
+            .pop-animate {
+                animation: popShow 0.25s ease;
+            }
+            @keyframes fadeIn {
+                from {opacity: 0;}
+                to {opacity: 1;}
+            }
+            @keyframes popShow {
+                from {transform: scale(0.92); opacity:0;}
+                to {transform: scale(1); opacity:1;}
+            }
+        }
+        body::-webkit-scrollbar {
+            width: 6px;
+        }
+        body::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 3px;
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-100 min-h-screen transition-colors duration-300">
-<div class="container mx-auto px-4 py-8 max-w-6xl">
-    <!-- 头部 -->
-    <header class="flex justify-between items-center mb-10">
-        <div>
-            <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold">
-                <i class="fa fa-wrench text-blue-500 mr-2"></i>全能工具箱
-            </h1>
-            <p class="text-gray-500 dark:text-gray-400">一站式在线实用工具集合</p>
-        </div>
-        <button id="themeBtn" class="p-3 rounded-full bg-gray-200 dark:bg-slate-700 card-hover">
-            <i class="fa fa-moon-o dark:hidden"></i>
-            <i class="fa fa-sun-o hidden dark:block"></i>
-        </button>
-    </header>
+<body class="bg-gameDark min-h-screen text-gray-200">
+    <div class="max-w-6xl mx-auto px-4 py-8 md:py-12">
+        <!-- 头部标题 -->
+        <header class="text-center mb-10">
+            <h1 class="text-[clamp(1.8rem,4vw,2.6rem)] font-bold text-gameGold text-shadow">点券充值中心</h1>
+            <p class="text-gray-400 mt-2">充值点券，畅享游戏内容</p>
+        </header>
 
-    <!-- 搜索框 -->
-    <div class="mb-8">
-        <input id="searchInput" type="text" placeholder="搜索工具名称..."
-               class="w-full px-5 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 outline-none focus:ring-2 focus:ring-blue-400">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 左侧充值区域 -->
+            <div class="lg:col-span-2">
+                <h2 class="text-lg mb-5 border-l-4 border-gameGold pl-3">选择充值档位</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="chargeList">
+                    <!-- 充值套餐JS渲染 -->
+                </div>
+
+                <!-- 温馨提示 -->
+                <div class="mt-8 bg-gameCard rounded-lg p-5 text-sm text-gray-300">
+                    <h3 class="text-gameGold mb-2"><i class="fa fa-exclamation-circle mr-1"></i>充值须知</h3>
+                    <ul class="space-y-1 text-gray-400">
+                        <li>• 付款完成后点券将自动发放，请确认二维码有效期</li>
+                        <li>• 充值返利活动限时开启，档位越高返利越多</li>
+                        <li>• 如长时间未到账，请保存支付截图联系客服</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 右侧充值排行榜 -->
+            <div class="bg-gameCard rounded-xl p-5 h-fit">
+                <h2 class="text-lg font-medium flex items-center gap-2 mb-5">
+                    <i class="fa fa-trophy text-gameGold"></i>充值排行榜
+                    <span class="text-xs text-gray-400 font-normal">实时榜单</span>
+                </h2>
+                <div id="rankList" class="space-y-3">
+                    <!-- 排行榜JS渲染 -->
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- 工具分组 -->
-    <main class="grid gap-8">
-        <!-- 文本工具 -->
-        <section>
-            <h2 class="text-xl font-semibold mb-4 border-l-4 border-blue-500 pl-3">📝 文本处理</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 tool-group">
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-file-text-o text-blue-500 text-xl mb-2"></i>
-                    <div class="font-medium">JSON格式化</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-exchange text-green-500 text-xl mb-2"></i>
-                    <div class="font-medium">大小写转换</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-barcode text-amber-500 text-xl mb-2"></i>
-                    <div class="font-medium">URL编解码</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-lock text-red-500 text-xl mb-2"></i>
-                    <div class="font-medium">MD5加密</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-list text-sky-500 text-xl mb-2"></i>
-                    <div class="font-medium">文本去重</div>
-                </a>
+    <!-- 充值弹窗遮罩 -->
+    <div id="payMask" class="fixed inset-0 bg-black/75 hidden items-center justify-center z-50 mask-fade p-4">
+        <div class="bg-gameCard rounded-xl w-full max-w-md pop-animate overflow-hidden">
+            <div class="flex justify-between items-center p-5 border-b border-gray-700">
+                <h3 class="font-bold text-xl">订单信息</h3>
+                <button id="closePop" class="text-gray-400 hover:text-white text-xl">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>
-        </section>
+            <div class="p-5 text-center">
+                <div class="mb-4">
+                    <span class="text-gray-400">充值档位：</span>
+                    <span id="popPrice" class="text-gameGold font-bold text-lg"></span>
+                </div>
+                <div class="mb-4">
+                    <span class="text-gray-400">获得点券：</span>
+                    <span id="popPoint" class="text-gameRed font-bold text-lg"></span>
+                </div>
 
-        <!-- 图像媒体 -->
-        <section>
-            <h2 class="text-xl font-semibold mb-4 border-l-4 border-rose-500 pl-3">🖼️ 图片媒体</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 tool-group">
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-picture-o text-rose-500 text-xl mb-2"></i>
-                    <div class="font-medium">图片压缩</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-crop text-orange-500 text-xl mb-2"></i>
-                    <div class="font-medium">图片裁剪</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-qrcode text-teal-500 text-xl mb-2"></i>
-                    <div class="font-medium">二维码生成</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-paint-brush text-violet-500 text-xl mb-2"></i>
-                    <div class="font-medium">色值转换</div>
-                </a>
+                <!-- 二维码区域【这里替换图片】 -->
+                <div class="my-6 flex justify-center">
+                    <div class="bg-white p-3 rounded-lg">
+                        <!-- =========把src换成你自己收款二维码========= -->
+                        <img id="qrImg" src="https://picsum.photos/220/220" alt="收款二维码" class="w-[220px] h-[220px] object-cover">
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm">请使用微信/支付宝扫码完成支付</p>
+                <p class="text-gameGold text-sm mt-2">⚠️支付成功后点券自动发放</p>
             </div>
-        </section>
-
-        <!-- 开发工具 -->
-        <section>
-            <h2 class="text-xl font-semibold mb-4 border-l-4 border-emerald-500 pl-3">💻 开发工具</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 tool-group">
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-code text-emerald-500 text-xl mb-2"></i>
-                    <div class="font-medium">代码格式化</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-terminal text-gray-500 text-xl mb-2"></i>
-                    <div class="font-medium">时间戳转换</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-random text-indigo-500 text-xl mb-2"></i>
-                    <div class="font-medium">随机字符串</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-database text-cyan-500 text-xl mb-2"></i>
-                    <div class="font-medium">Base64转换</div>
-                </a>
+            <div class="px-5 pb-5">
+                <button id="payBtn" class="w-full bg-gameGold hover:bg-yellow-500 text-black font-bold py-3 rounded-lg transition">
+                    我已完成付款
+                </button>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- 生活计算 -->
-        <section>
-            <h2 class="text-xl font-semibold mb-4 border-l-4 border-amber-500 pl-3">🧮 计算工具</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 tool-group">
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-calculator text-amber-500 text-xl mb-2"></i>
-                    <div class="font-medium">科学计算器</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-calendar text-pink-500 text-xl mb-2"></i>
-                    <div class="font-medium">日期计算</div>
-                </a>
-                <a href="#" class="tool-item block p-4 bg-white dark:bg-slate-800 rounded-xl card-hover">
-                    <i class="fa fa-exchange text-lime-500 text-xl mb-2"></i>
-                    <div class="font-medium">单位换算</div>
-                </a>
-            </div>
-        </section>
-    </main>
+    <script>
+        // 充值档位配置 【可以自由增删修改】
+        const chargePackages = [
+            {money:10, point:100, bonus:0, tip:""},
+            {money:50, point:520, bonus:20, tip:"首充额外赠送20点券"},
+            {money:100, point:1100, bonus:100, tip:"充100返100！热门推荐🔥"},
+            {money:200, point:2300, bonus:300, tip:"超值优选"},
+            {money:500, point:6000, bonus:1000, tip:"大额充值首选"},
+            {money:1000, point:12500, bonus:2500, tip:"尊享大额礼包"}
+        ]
 
-    <footer class="mt-16 pt-6 border-t border-gray-200 dark:border-slate-700 text-center text-sm text-gray-400">
-        简易工具箱 · 本地静态站点 | 自行添加更多工具链接
-    </footer>
-</div>
+        // 模拟排行榜数据
+        const rankData = [
+            {name:"消炎", money:1860},
+            {name:"告白气球", money:1250},
+            {name:"她说人狗殊途", money:960},
+            {name:"暖男排狗后面", money:680},
+            {name:"不吃香菜", money:520},
+            {name:"向天再借十厘米", money:360},
+            {name:"浅梦", money:240},
+        ]
 
-<script>
-    // 暗色模式
-    const html = document.documentElement;
-    const themeBtn = document.getElementById('themeBtn');
-    if(localStorage.getItem('theme') === 'dark'){
-        html.classList.add('dark');
-    }
-    themeBtn.onclick = ()=>{
-        html.classList.toggle('dark');
-        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-    }
-
-    // 搜索过滤功能
-    const searchInput = document.getElementById('searchInput');
-    const allTools = document.querySelectorAll('.tool-item');
-    searchInput.addEventListener('input', function(){
-        const keyword = this.value.trim().toLowerCase();
-        allTools.forEach(item=>{
-            const name = item.querySelector('div').innerText.toLowerCase();
-            item.style.display = name.includes(keyword) ? 'block' : 'none';
+        const chargeWrap = document.getElementById('chargeList');
+        // 渲染充值套餐
+        chargePackages.forEach(item=>{
+            const totalPoint = item.point + item.bonus;
+            const div = document.createElement('div');
+            div.className = "card-hover bg-[#272e3f] rounded-lg p-5 cursor-pointer border border-transparent hover:border-amber-600/40";
+            div.innerHTML = `
+                <div class="text-gameGold text-2xl font-bold">¥${item.money}</div>
+                <div class="mt-2 text-lg">${item.point}点券</div>
+                ${item.bonus>0 ? `<div class="text-gameRed mt-1 text-sm">赠送${item.bonus}点券</div>` : ''}
+                ${item.tip ? `<div class="mt-2 text-xs bg-gameRed/20 text-gameRed inline-block px-2 py-1 rounded">${item.tip}</div>` : ''}
+            `;
+            div.onclick = ()=>openPayPop(item);
+            chargeWrap.appendChild(div);
         })
-    })
-</script>
+
+        // 渲染排行榜
+        const rankWrap = document.getElementById('rankList');
+        rankData.forEach((u,i)=>{
+            const colorClass = i===0 ? 'text-gameGold' : i===1 ? 'text-gray-300' : i===2 ? 'text-amber-600' : 'text-gray-400';
+            const div = document.createElement('div');
+            div.className = "flex justify-between items-center";
+            div.innerHTML = `
+                <div class="flex gap-3 items-center">
+                    <span class="${colorClass} font-bold w-6">${i+1}</span>
+                    <span>${u.name}</span>
+                </div>
+                <span class="text-gameGold">¥${u.money}</span>
+            `
+            rankWrap.appendChild(div);
+        })
+
+        // 弹窗控制
+        const mask = document.getElementById('payMask');
+        const popPrice = document.getElementById('popPrice');
+        const popPoint = document.getElementById('popPoint');
+
+        function openPayPop(item){
+            const total = item.point + item.bonus;
+            popPrice.innerText = `¥${item.money}`;
+            popPoint.innerText = `${total}点券（基础${item.point}+赠送${item.bonus}）`;
+            mask.style.display = 'flex';
+        }
+
+        document.getElementById('closePop').onclick = ()=>{
+            mask.style.display = 'none';
+        }
+        mask.onclick = (e)=>{
+            if(e.target === mask) mask.style.display = 'none';
+        }
+
+        document.getElementById('payBtn').onclick = function(){
+            alert("模拟：提交成功！点券已发放");
+            mask.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
